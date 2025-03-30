@@ -1,6 +1,6 @@
 ﻿namespace LibraryManagementSystem.Models
 {
- public class Book : IEquatable<Book>, IEntity
+ public class Book : IEquatable<Book>
     {
         public int Id { get; set; }
         public required string Title { get; set; }

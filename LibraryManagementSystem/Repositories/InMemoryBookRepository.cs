@@ -3,17 +3,18 @@ using LibraryManagementSystem.Models;
 
 namespace LibraryManagementSystem.Repositories
 {
-    public class InMemoryRepository<T> : IRepository<T> where T : IEntity
+    public class InMemoryBookRepository : IBookRepository
     {
-        private readonly Dictionary<int, T> _entities;
+        private readonly Dictionary<int, Book> _entities;
+        public InMemoryBookRepository() => _entities = new Dictionary<int, Book>();
         private int _nextId = 1;
-        public InMemoryRepository() => _entities = new Dictionary<int, T>();
-        public void Add(T entity)
+
+        public void Add(Book entity)
         {
             entity.Id = _nextId++;
             _entities.Add(entity.Id, entity);
         }
-        public void Update(T entity)
+        public void Update(Book entity)
         {
             if (_entities.ContainsKey(entity.Id))
             {
@@ -28,13 +29,13 @@ namespace LibraryManagementSystem.Repositories
         {
             return _entities.ContainsKey(id);
         }
-        public IEnumerable<T> GetAll()
+        public IEnumerable<Book> GetAll()
         {
             return _entities.Values;
         }
-        public T? GetById(int id)
+        public Book? GetById(int id)
         {
-            return Exists(id) ? _entities[id] : default(T);
+            return Exists(id) ? _entities[id] : default(Book);
         }
     }
 }

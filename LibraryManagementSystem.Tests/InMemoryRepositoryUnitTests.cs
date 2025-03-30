@@ -5,7 +5,7 @@ namespace LibraryManagementSystem.Tests
 {
     public class InMemoryRepositoryUnitTests
     {
-        private readonly InMemoryRepository<Book> _bookRepository;
+        private readonly InMemoryBookRepository _bookRepository;
         private readonly Book _sampleBook;
 
         public InMemoryRepositoryUnitTests()
