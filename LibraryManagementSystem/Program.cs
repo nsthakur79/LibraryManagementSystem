@@ -23,7 +23,7 @@ internal class Program
             // Setup DI container
             var serviceProvider = new ServiceCollection()
             .AddSingleton<IBookNumberValidator, ISBNValidator>()
-            .AddSingleton<IRepository<Book>, Repository<Book>>()
+            .AddSingleton<IRepository<Book>, InMemoryRepository<Book>>()
             .AddSingleton<IBookService, BookService>()
             .AddSingleton<IBookValidator, BookValidator>()
             .AddSingleton<LibraryManagementSystemApp>()
