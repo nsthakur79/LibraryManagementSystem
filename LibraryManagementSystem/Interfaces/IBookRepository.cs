@@ -2,12 +2,12 @@
 
 namespace LibraryManagementSystem.Interfaces
 {
-    public interface IBookRepository
+    public interface IBookRepository<T> where T : IBookEntity
     {
-        IEnumerable<Book> GetAllBooks();
-        Book GetBookById(int id);
-        void AddBook(Book book);
-        void UpdateBook(Book book);
+        IEnumerable<T> GetAllBooks();
+        T? GetBookById(int id);
+        void AddBook(T entity);
+        void UpdateBook(T entity);
         void DeleteBook(int id);
         bool BookExists(int id);
     }

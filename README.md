@@ -58,7 +58,6 @@ To run the unit tests:
 
 
 ## Future Improvements
-- **Logging**: Implement attribute based (Aspect Injection) logging to log errors, warnings, and information messages.
 - **Persistence**: Implement a database to store the book data.
 - **Search Functionality**: Implement a search functionality to search for books by title, author, or ISBN.
 

@@ -1,12 +1,14 @@
 ﻿using LibraryManagementSystem.Interfaces;
 using LibraryManagementSystem.Models;
 using LibraryManagementSystem.Utilities;
+using Serilog;
 
 namespace LibraryManagementSystem
 {
-    public class LibraryManagementSystemApp(IBookService bookService)
+    public class LibraryManagementSystemApp(IBookService bookService, ILogger logger)
     {
         private readonly IBookService _bookService = bookService;
+        private readonly ILogger _logger = logger;
 
         public void Run()
         {
@@ -99,6 +101,7 @@ namespace LibraryManagementSystem
             }
             catch (Exception exception)
             {
+                _logger.Error(exception, $"Operation: {nameof(PopulateBooksData)}");
                 Utility.ConsoleWriteRedLine($"Error populating Books data: {exception.Message}.");
             }
         }
@@ -107,30 +110,28 @@ namespace LibraryManagementSystem
         {
             try
             {
-                Book book = new() { Author = string.Empty, ISBN = string.Empty, PublisherYear = string.Empty, Title = string.Empty };
-
                 Console.Clear();
                 Utility.ConsoleWriteYellowLine("Add a book (* denotes required fields)");
                 Utility.ConsoleWriteYellowLine("======================================");
 
-                Console.WriteLine("*Enter the book title:");
-                book.Title = Utility.ConsoleReadLine();
-
-                Console.WriteLine("*Enter the book author:");
-                book.Author = Utility.ConsoleReadLine();
-
-                Console.WriteLine("*Enter the book ISBN:");
-                book.ISBN = Utility.ConsoleReadLine();
-
-                Console.WriteLine("*Enter the book publisher year:");
-                book.PublisherYear = Utility.ConsoleReadLine();
+                Book book = new()
+                {
+                    Title = Utility.ReadAndAddProperty($"{nameof(book.Title)}"),
+                    Author = Utility.ReadAndAddProperty($"{nameof(book.Author)}"),
+                    ISBN = Utility.ReadAndAddProperty($"{nameof(book.ISBN)}"),
+                    PublisherYear = Utility.ReadAndAddProperty($"{nameof(book.PublisherYear)}")
+                };
 
                 _bookService?.AddBook(book);
                 Utility.ConsoleWriteGreenLine("\nBook added successfully.");
             }
-            catch (Exception exception)
+            catch (ArgumentException exception) 
             {
                 Utility.ConsoleWriteRedLine($"\nBook cannot be added. Error: {exception.Message}.");
+            }
+            catch (Exception exception)
+            {
+                _logger.Error(exception, $"Operation: {nameof(AddBook)}");
             }
             finally
             {
@@ -148,7 +149,7 @@ namespace LibraryManagementSystem
 
                 Console.WriteLine("\nEnter the Book ID to update:");
 
-                bool v = int.TryParse(Console.ReadLine(), out int id);
+                _ = int.TryParse(Console.ReadLine(), out int id);
                 var bookToUpdate = _bookService?.GetBookById(id);
 
                 if (bookToUpdate == null) return;
@@ -173,9 +174,13 @@ namespace LibraryManagementSystem
                 _bookService?.UpdateBook(updatedBook);
                 Utility.ConsoleWriteGreenLine("\nBook updated successfully.");
             }
-            catch (Exception exception)
+            catch (ArgumentException exception)
             {
                 Utility.ConsoleWriteRedLine($"Book cannot be updated. Error: {exception.Message}");
+            }
+            catch (Exception exception)
+            {
+                _logger.Error(exception, $"Operation: {nameof(UpdateBook)}");
             }
             finally
             {
@@ -193,14 +198,17 @@ namespace LibraryManagementSystem
                 Console.WriteLine("Enter the Book ID to delete:");
 
                 bool isNumber = int.TryParse(Console.ReadLine(), out int id);
-                var bookToUpdate = _bookService?.GetBookById(id);
-
                 _bookService?.DeleteBook(id);
+                
                 Utility.ConsoleWriteGreenLine("Book deleted successfully.");
+            }
+            catch (ArgumentException exception)
+            {
+                Utility.ConsoleWriteRedLine($"Book cannot be deleted. Error: {exception.Message}");
             }
             catch (Exception exception)
             {
-                Utility.ConsoleWriteRedLine($"Book cannot be deleted. Error: {exception.Message}");
+                _logger.Error(exception, $"Operation: {nameof(DeleteBook)}");
             }
             finally
             {
@@ -226,6 +234,7 @@ namespace LibraryManagementSystem
             }
             catch (Exception exception)
             {
+                _logger.Error(exception, $"Operation: {nameof(ListAllBooks)}");
                 Utility.ConsoleWriteRedLine($"List of all books cannot be displayed. Error: {exception.Message}");
             }
             finally
@@ -250,6 +259,7 @@ namespace LibraryManagementSystem
             }
             catch (Exception exception)
             {
+                _logger.Error(exception, $"Operation: {nameof(GetBookById)}");
                 Utility.ConsoleWriteRedLine($"Specific book cannot be displayed. Error: {exception.Message}");
             }
             finally
