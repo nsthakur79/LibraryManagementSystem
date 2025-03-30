@@ -2,7 +2,7 @@
 using LibraryManagementSystem;
 using LibraryManagementSystem.Interfaces;
 using LibraryManagementSystem.Models;
-using LibraryManagementSystem.Respositories;
+using LibraryManagementSystem.Repositories;
 using LibraryManagementSystem.Services;
 using LibraryManagementSystem.Validators;
 using Microsoft.Extensions.DependencyInjection;

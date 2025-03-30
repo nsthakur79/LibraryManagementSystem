@@ -1,7 +1,7 @@
 ﻿using LibraryManagementSystem.Interfaces;
 using LibraryManagementSystem.Models;
 
-namespace LibraryManagementSystem.Respositories
+namespace LibraryManagementSystem.Repositories
 {
     public class InMemoryRepository<T> : IRepository<T> where T : IEntity
     {
@@ -37,5 +37,4 @@ namespace LibraryManagementSystem.Respositories
             return Exists(id) ? _entities[id] : default(T);
         }
     }
-    
 }
