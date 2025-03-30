@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using LibraryManagementSystem;
 using LibraryManagementSystem.Interfaces;
+using LibraryManagementSystem.Models;
 using LibraryManagementSystem.Respositories;
 using LibraryManagementSystem.Services;
 using LibraryManagementSystem.Validators;
@@ -13,7 +14,7 @@ internal class Program
         // Setup DI container
         var serviceProvider = new ServiceCollection()
             .AddSingleton<IBookNumberValidator, ISBNValidator>()
-            .AddSingleton<IBookRepository, BookRepository>()
+            .AddSingleton<IBookRepository<Book>, BookRepository>()
             .AddSingleton<IBookService, BookService>()
             .AddSingleton<IBookValidator, BookValidator>()
             .AddSingleton<LibraryManagementSystemApp>()

@@ -4,9 +4,9 @@ using LibraryManagementSystem.Models;
 
 namespace LibraryManagementSystem.Services
 {
-    public class BookService(IBookRepository bookRepository, IBookValidator bookValidator) : IBookService
+    public class BookService(IBookRepository<Book> bookRepository, IBookValidator bookValidator) : IBookService
     {
-        private readonly IBookRepository _bookRepository = bookRepository;
+        private readonly IBookRepository<Book> _bookRepository = bookRepository;
         private readonly IBookValidator _bookValidator = bookValidator;
 
         public IEnumerable<Book> GetAllBooks()
@@ -21,7 +21,7 @@ namespace LibraryManagementSystem.Services
             return books;
         }
 
-        public Book GetBookById(int id)
+        public Book? GetBookById(int id)
         {
             EnsureBookIdExists(id);
             return _bookRepository.GetBookById(id);

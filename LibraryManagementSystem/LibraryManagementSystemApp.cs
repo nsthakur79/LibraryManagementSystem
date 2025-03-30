@@ -107,29 +107,24 @@ namespace LibraryManagementSystem
         {
             try
             {
-                Book book = new() { Author = string.Empty, ISBN = string.Empty, PublisherYear = string.Empty, Title = string.Empty };
-
                 Console.Clear();
                 Utility.ConsoleWriteYellowLine("Add a book (* denotes required fields)");
                 Utility.ConsoleWriteYellowLine("======================================");
 
-                Console.WriteLine("*Enter the book title:");
-                book.Title = Utility.ConsoleReadLine();
-
-                Console.WriteLine("*Enter the book author:");
-                book.Author = Utility.ConsoleReadLine();
-
-                Console.WriteLine("*Enter the book ISBN:");
-                book.ISBN = Utility.ConsoleReadLine();
-
-                Console.WriteLine("*Enter the book publisher year:");
-                book.PublisherYear = Utility.ConsoleReadLine();
+                Book book = new() 
+                {
+                    Title = Utility.ReadAndAddProperty($"{nameof(book.Title)}"),
+                    Author = Utility.ReadAndAddProperty($"{nameof(book.Author)}"),
+                    ISBN = Utility.ReadAndAddProperty($"{nameof(book.ISBN)}"),
+                    PublisherYear = Utility.ReadAndAddProperty($"{nameof(book.PublisherYear)}")
+                };
 
                 _bookService?.AddBook(book);
                 Utility.ConsoleWriteGreenLine("\nBook added successfully.");
             }
             catch (Exception exception)
             {
+                // Log the exception
                 Utility.ConsoleWriteRedLine($"\nBook cannot be added. Error: {exception.Message}.");
             }
             finally
@@ -175,6 +170,7 @@ namespace LibraryManagementSystem
             }
             catch (Exception exception)
             {
+                // Log the exception
                 Utility.ConsoleWriteRedLine($"Book cannot be updated. Error: {exception.Message}");
             }
             finally
@@ -193,9 +189,8 @@ namespace LibraryManagementSystem
                 Console.WriteLine("Enter the Book ID to delete:");
 
                 bool isNumber = int.TryParse(Console.ReadLine(), out int id);
-                var bookToUpdate = _bookService?.GetBookById(id);
-
                 _bookService?.DeleteBook(id);
+                
                 Utility.ConsoleWriteGreenLine("Book deleted successfully.");
             }
             catch (Exception exception)
@@ -226,6 +221,7 @@ namespace LibraryManagementSystem
             }
             catch (Exception exception)
             {
+                // Log the exception
                 Utility.ConsoleWriteRedLine($"List of all books cannot be displayed. Error: {exception.Message}");
             }
             finally
@@ -250,6 +246,7 @@ namespace LibraryManagementSystem
             }
             catch (Exception exception)
             {
+                // Log the exception
                 Utility.ConsoleWriteRedLine($"Specific book cannot be displayed. Error: {exception.Message}");
             }
             finally

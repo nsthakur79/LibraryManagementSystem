@@ -3,7 +3,7 @@ using LibraryManagementSystem.Models;
 
 namespace LibraryManagementSystem.Respositories
 {
-    public class BookRepository : IBookRepository
+    public class BookRepository : IBookRepository<Book>
     {
         private readonly Dictionary<int, Book> _books;
         private int _nextId = 1;
@@ -38,7 +38,7 @@ namespace LibraryManagementSystem.Respositories
             return _books.Values;
         }
 
-        public Book GetBookById(int id)
+        public Book? GetBookById(int id)
         {
             return BookExists(id) ? _books[id] : null!;
         }
