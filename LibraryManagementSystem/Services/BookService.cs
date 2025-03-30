@@ -4,14 +4,14 @@ using LibraryManagementSystem.Models;
 
 namespace LibraryManagementSystem.Services
 {
-    public class BookService(IBookRepository<Book> bookRepository, IBookValidator bookValidator) : IBookService
+    public class BookService(IRepository<Book> bookRepository, IBookValidator bookValidator) : IBookService
     {
-        private readonly IBookRepository<Book> _bookRepository = bookRepository;
+        private readonly IRepository<Book> _bookRepository = bookRepository;
         private readonly IBookValidator _bookValidator = bookValidator;
 
         public IEnumerable<Book> GetAllBooks()
         {
-            var books = _bookRepository.GetAllBooks();
+            var books = _bookRepository.GetAll();
 
             if (books == null || !books.Any())
             {
@@ -24,24 +24,24 @@ namespace LibraryManagementSystem.Services
         public Book? GetBookById(int id)
         {
             EnsureBookIdExists(id);
-            return _bookRepository.GetBookById(id);
+            return _bookRepository.GetById(id);
         }
 
         public void AddBook(Book book)
         {
             _bookValidator.ValidateBook(book);
-            _bookRepository.AddBook(book);
+            _bookRepository.Add(book);
         }
         public void UpdateBook(Book book)
         {
             EnsureBookIdExists(book.Id);
             _bookValidator.ValidateBook(book);
-            _bookRepository.UpdateBook(book);
+            _bookRepository.Update(book);
         }
         public void DeleteBook(int id)
         {
             EnsureBookIdExists(id);
-            _bookRepository.DeleteBook(id);
+            _bookRepository.Delete(id);
         }
         public void EnsureBookIdExists(int id)
         {
@@ -53,7 +53,7 @@ namespace LibraryManagementSystem.Services
 
         public bool BookExists(int id)
         {
-            return _bookRepository.BookExists(id);
+            return _bookRepository.Exists(id);
         }
     }
 }
