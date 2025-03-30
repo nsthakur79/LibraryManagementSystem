@@ -5,7 +5,7 @@ namespace LibraryManagementSystem.Tests
 {
     public class BookRepositoryUnitTests
     {
-        private readonly BookRepository _bookRepository;
+        private readonly Repository<Book> _bookRepository;
         private readonly Book _sampleBook;
 
         public BookRepositoryUnitTests()
@@ -18,10 +18,10 @@ namespace LibraryManagementSystem.Tests
         private void ClearRepository()
         {
             // Remove all books by getting their IDs first
-            var books = _bookRepository.GetAllBooks().ToList();
+            var books = _bookRepository.GetAll().ToList();
             foreach (var book in books)
             {
-                _bookRepository.DeleteBook(book.Id);
+                _bookRepository.Delete(book.Id);
             }
         }
 
@@ -29,7 +29,7 @@ namespace LibraryManagementSystem.Tests
         public void GetAllBooks_ShouldReturnEmptyList_WhenNoBooksAdded()
         {
             // Act
-            var result = _bookRepository.GetAllBooks();
+            var result = _bookRepository.GetAll();
 
             // Assert
             Assert.Empty(result);
@@ -39,8 +39,8 @@ namespace LibraryManagementSystem.Tests
         public void Add_ShouldAddBook_WithAutoIncrementedId()
         {
             // Act
-            _bookRepository.AddBook(_sampleBook);
-            var books = _bookRepository.GetAllBooks().ToList();
+            _bookRepository.Add(_sampleBook);
+            var books = _bookRepository.GetAll().ToList();
 
             // Assert
             Assert.Single(books);
@@ -61,9 +61,9 @@ namespace LibraryManagementSystem.Tests
             };
 
             // Act
-            _bookRepository.AddBook(_sampleBook);
-            _bookRepository.AddBook(book2);
-            var books = _bookRepository.GetAllBooks().ToList();
+            _bookRepository.Add(_sampleBook);
+            _bookRepository.Add(book2);
+            var books = _bookRepository.GetAll().ToList();
 
             // Assert
             Assert.Equal(2, books.Count);
@@ -75,11 +75,11 @@ namespace LibraryManagementSystem.Tests
         public void GetById_ShouldReturnBook_WhenBookExists()
         {
             // Arrange
-            _bookRepository.AddBook(_sampleBook);
-            var addedBook = _bookRepository.GetAllBooks().First();
+            _bookRepository.Add(_sampleBook);
+            var addedBook = _bookRepository.GetAll().First();
 
             // Act
-            var result = _bookRepository.GetBookById(addedBook.Id);
+            var result = _bookRepository.GetById(addedBook.Id);
 
             // Assert
             Assert.NotNull(result);
@@ -91,7 +91,7 @@ namespace LibraryManagementSystem.Tests
         public void GetById_ShouldReturnNull_WhenBookDoesNotExist()
         {
             // Act
-            var result = _bookRepository.GetBookById(999); // Non-existent ID
+            var result = _bookRepository.GetById(999); // Non-existent ID
 
             // Assert
             Assert.Null(result);
@@ -101,8 +101,8 @@ namespace LibraryManagementSystem.Tests
         public void UpdateBook_ShouldModifyExistingBook()
         {
             // Arrange
-            _bookRepository.AddBook(_sampleBook);
-            var addedBook = _bookRepository.GetAllBooks().First();
+            _bookRepository.Add(_sampleBook);
+            var addedBook = _bookRepository.GetAll().First();
             var UpdateBook = new Book
             {
                 Id = addedBook.Id,
@@ -113,8 +113,8 @@ namespace LibraryManagementSystem.Tests
             };
 
             // Act
-            _bookRepository.UpdateBook(UpdateBook);
-            var result = _bookRepository.GetBookById(addedBook.Id);
+            _bookRepository.Update(UpdateBook);
+            var result = _bookRepository.GetById(addedBook.Id);
 
             // Assert
             Assert.NotNull(result);
@@ -138,41 +138,41 @@ namespace LibraryManagementSystem.Tests
             };
 
             // Act & Assert (should not throw)
-            _bookRepository.UpdateBook(nonExistentBook);
+            _bookRepository.Update(nonExistentBook);
         }
 
         [Fact]
         public void Delete_ShouldRemoveBook_WhenBookExists()
         {
             // Arrange
-            _bookRepository.AddBook(_sampleBook);
-            var addedBook = _bookRepository.GetAllBooks().First();
+            _bookRepository.Add(_sampleBook);
+            var addedBook = _bookRepository.GetAll().First();
 
             // Act
-            _bookRepository.DeleteBook(addedBook.Id);
-            var result = _bookRepository.GetBookById(addedBook.Id);
+            _bookRepository.Delete(addedBook.Id);
+            var result = _bookRepository.GetById(addedBook.Id);
 
             // Assert
             Assert.Null(result);
-            Assert.Empty(_bookRepository.GetAllBooks());
+            Assert.Empty(_bookRepository.GetAll());
         }
 
         [Fact]
         public void Delete_ShouldNotThrow_WhenBookDoesNotExist()
         {
             // Act & Assert (should not throw)
-            _bookRepository.DeleteBook(999); // Non-existent ID
+            _bookRepository.Delete(999); // Non-existent ID
         }
 
         [Fact]
         public void Exists_ShouldReturnTrue_WhenBookExists()
         {
             // Arrange
-            _bookRepository.AddBook(_sampleBook);
-            var addedBook = _bookRepository.GetAllBooks().First();
+            _bookRepository.Add(_sampleBook);
+            var addedBook = _bookRepository.GetAll().First();
 
             // Act
-            var result = _bookRepository.BookExists(addedBook.Id);
+            var result = _bookRepository.Exists(addedBook.Id);
 
             // Assert
             Assert.True(result);
@@ -182,7 +182,7 @@ namespace LibraryManagementSystem.Tests
         public void Exists_ShouldReturnFalse_WhenBookDoesNotExist()
         {
             // Act
-            var result = _bookRepository.BookExists(999); // Non-existent ID
+            var result = _bookRepository.Exists(999); // Non-existent ID
 
             // Assert
             Assert.False(result);
@@ -197,10 +197,10 @@ namespace LibraryManagementSystem.Tests
             var book3 = new Book { Title = "Third Book", Author = "Author 3", ISBN = "3333333333", PublisherYear = "2022" };
 
             // Act
-            _bookRepository.AddBook(book1);
-            _bookRepository.AddBook(book2);
-            _bookRepository.AddBook(book3);
-            var result = _bookRepository.GetAllBooks().ToList();
+            _bookRepository.Add(book1);
+            _bookRepository.Add(book2);
+            _bookRepository.Add(book3);
+            var result = _bookRepository.GetAll().ToList();
 
             // Assert
             Assert.Equal(3, result.Count);
@@ -214,12 +214,12 @@ namespace LibraryManagementSystem.Tests
         {
             // Arrange
             var initialBook = new Book { Title = "Initial Book", Author = "Initial Author", ISBN = "4444444444", PublisherYear = "2019" };
-            _bookRepository.AddBook(initialBook);
-            var initialCount = _bookRepository.GetAllBooks().Count();
+            _bookRepository.Add(initialBook);
+            var initialCount = _bookRepository.GetAll().Count();
 
             // Act
-            _bookRepository.AddBook(_sampleBook);
-            var books = _bookRepository.GetAllBooks().ToList();
+            _bookRepository.Add(_sampleBook);
+            var books = _bookRepository.GetAll().ToList();
 
             // Assert
             Assert.Equal(initialCount + 1, books.Count);

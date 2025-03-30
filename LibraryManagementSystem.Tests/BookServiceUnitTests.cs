@@ -8,11 +8,11 @@ namespace LibraryManagementSystem.Tests
     public class BookServiceUnitTests
     {
         private readonly BookService _bookService;
-        private readonly Mock<IBookRepository<Book>> _bookRepositoryMock;
+        private readonly Mock<IRepository<Book>> _bookRepositoryMock;
         private readonly Mock<IBookValidator> _bookValidatorMock;
         public BookServiceUnitTests()
         {
-            _bookRepositoryMock = new Mock<IBookRepository<Book>>();
+            _bookRepositoryMock = new Mock<IRepository<Book>>();
             _bookValidatorMock = new Mock<IBookValidator>();
             _bookService = new BookService(_bookRepositoryMock.Object, _bookValidatorMock.Object);
         }
@@ -28,7 +28,7 @@ namespace LibraryManagementSystem.Tests
             _bookService.AddBook(book);
 
             // Assert
-            _bookRepositoryMock.Verify(repo => repo.AddBook(book), Times.Once);
+            _bookRepositoryMock.Verify(repo => repo.Add(book), Times.Once);
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace LibraryManagementSystem.Tests
                 new() { Id = 1, Title = "Test Book 1", Author = "Test Author 1", ISBN = "1234567890", PublisherYear = "2023" },
                 new() { Id = 2, Title = "Test Book 2", Author = "Test Author 2", ISBN = "0987654321", PublisherYear = "2022" }
             };
-            _bookRepositoryMock.Setup(repo => repo.GetAllBooks()).Returns(books);
+            _bookRepositoryMock.Setup(repo => repo.GetAll()).Returns(books);
 
             // Act
             var result = _bookService.GetAllBooks();
@@ -54,8 +54,8 @@ namespace LibraryManagementSystem.Tests
         {
             // Arrange
             var book = new Book { Id = 1, Title = "Test Book", Author = "Test Author", ISBN = "1234567890", PublisherYear = "2023" };
-            _bookRepositoryMock.Setup(repo => repo.BookExists(book.Id)).Returns(true);
-            _bookRepositoryMock.Setup(repo => repo.GetBookById(1)).Returns(book);
+            _bookRepositoryMock.Setup(repo => repo.Exists(book.Id)).Returns(true);
+            _bookRepositoryMock.Setup(repo => repo.GetById(1)).Returns(book);
 
             // Act
             var result = _bookService.GetBookById(1);
@@ -68,8 +68,8 @@ namespace LibraryManagementSystem.Tests
         public void GetBookById_ShouldReturnNull_WhenBookDoesNotExist()
         {
             // Arrange
-            _bookRepositoryMock.Setup(repo => repo.BookExists(1)).Returns(true);
-            _bookRepositoryMock.Setup(repo => repo.GetBookById(1)).Returns((Book)null!);
+            _bookRepositoryMock.Setup(repo => repo.Exists(1)).Returns(true);
+            _bookRepositoryMock.Setup(repo => repo.GetById(1)).Returns((Book)null!);
 
             // Act
             var result = _bookService.GetBookById(1);
@@ -83,13 +83,13 @@ namespace LibraryManagementSystem.Tests
         {
             // Arrange
             var book = new Book { Id = 1, Title = "Updated Book", Author = "Updated Author", ISBN = "1234567890", PublisherYear = "2023" };
-            _bookRepositoryMock.Setup(repo => repo.BookExists(book.Id)).Returns(true);
+            _bookRepositoryMock.Setup(repo => repo.Exists(book.Id)).Returns(true);
 
             // Act
             _bookService.UpdateBook(book);
 
             // Assert
-            _bookRepositoryMock.Verify(repo => repo.UpdateBook(book), Times.Once);
+            _bookRepositoryMock.Verify(repo => repo.Update(book), Times.Once);
         }
 
         [Fact]
@@ -97,13 +97,13 @@ namespace LibraryManagementSystem.Tests
         {
             // Arrange
             var bookId = 1;
-            _bookRepositoryMock.Setup(repo => repo.BookExists(bookId)).Returns(true);
+            _bookRepositoryMock.Setup(repo => repo.Exists(bookId)).Returns(true);
 
             // Act
             _bookService.DeleteBook(bookId);
 
             // Assert
-            _bookRepositoryMock.Verify(repo => repo.DeleteBook(bookId), Times.Once);
+            _bookRepositoryMock.Verify(repo => repo.Delete(bookId), Times.Once);
         }
 
         [Fact]
@@ -111,7 +111,7 @@ namespace LibraryManagementSystem.Tests
         {
             // Arrange
             var bookId = 1;
-            _bookRepositoryMock.Setup(repo => repo.BookExists(bookId)).Returns(true);
+            _bookRepositoryMock.Setup(repo => repo.Exists(bookId)).Returns(true);
 
             // Act
             var result = _bookService.BookExists(bookId);
@@ -125,7 +125,7 @@ namespace LibraryManagementSystem.Tests
         {
             // Arrange
             var bookId = 1;
-            _bookRepositoryMock.Setup(repo => repo.BookExists(bookId)).Returns(false);
+            _bookRepositoryMock.Setup(repo => repo.Exists(bookId)).Returns(false);
 
             // Act
             var result = _bookService.BookExists(bookId);
