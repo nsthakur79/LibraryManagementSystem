@@ -8,11 +8,11 @@ namespace LibraryManagementSystem.Tests
     public class BookServiceUnitTests
     {
         private readonly BookService _bookService;
-        private readonly Mock<IRepository<Book>> _bookRepositoryMock;
+        private readonly Mock<IBookRepository> _bookRepositoryMock;
         private readonly Mock<IBookValidator> _bookValidatorMock;
         public BookServiceUnitTests()
         {
-            _bookRepositoryMock = new Mock<IRepository<Book>>();
+            _bookRepositoryMock = new Mock<IBookRepository>();
             _bookValidatorMock = new Mock<IBookValidator>();
             _bookService = new BookService(_bookRepositoryMock.Object, _bookValidatorMock.Object);
         }

@@ -3,9 +3,9 @@ using LibraryManagementSystem.Models;
 
 namespace LibraryManagementSystem.Services
 {
-    public class BookService(IRepository<Book> bookRepository, IBookValidator bookValidator) : IBookService
+    public class BookService(IBookRepository bookRepository, IBookValidator bookValidator) : IBookService
     {
-        private readonly IRepository<Book> _bookRepository = bookRepository;
+        private readonly IBookRepository _bookRepository = bookRepository;
         private readonly IBookValidator _bookValidator = bookValidator;
 
         public IEnumerable<Book> GetAllBooks()
