@@ -3,12 +3,12 @@ using LibraryManagementSystem.Respositories;
 
 namespace LibraryManagementSystem.Tests
 {
-    public class BookRepositoryUnitTests
+    public class InMemoryRepositoryUnitTests
     {
-        private readonly Repository<Book> _bookRepository;
+        private readonly InMemoryRepository<Book> _bookRepository;
         private readonly Book _sampleBook;
 
-        public BookRepositoryUnitTests()
+        public InMemoryRepositoryUnitTests()
         {
             _bookRepository = new();
             _sampleBook = new() { Id = 1, Title = "Book 1", Author = "Author 1", ISBN = "123", PublisherYear = "2020" };

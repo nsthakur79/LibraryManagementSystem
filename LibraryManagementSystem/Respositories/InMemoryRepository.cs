@@ -3,11 +3,11 @@ using LibraryManagementSystem.Models;
 
 namespace LibraryManagementSystem.Respositories
 {
-    public class Repository<T> : IRepository<T> where T : IEntity
+    public class InMemoryRepository<T> : IRepository<T> where T : IEntity
     {
         private readonly Dictionary<int, T> _entities;
         private int _nextId = 1;
-        public Repository() => _entities = new Dictionary<int, T>();
+        public InMemoryRepository() => _entities = new Dictionary<int, T>();
         public void Add(T entity)
         {
             entity.Id = _nextId++;
