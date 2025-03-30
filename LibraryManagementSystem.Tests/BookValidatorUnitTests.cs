@@ -30,10 +30,10 @@ namespace LibraryManagementSystem.Tests
         [InlineData("Title", "Author", "1234567890", "", "Publisher year is required")]
         [InlineData("Title", "Author", "InvalidISBN", "2023", "Invalid ISBN")]
         [InlineData("Title", "Author", "1234567890", "InvalidYear", "Publisher year must be a number")]
-        public void ValidateBook_ShouldThrowArgumentException_WhenValidationFails(string title, string author, string isbn, string publisherYear, string expectedMessage)
+        public void ValidateBook_ShouldThrowArgumentException_WhenValidationFails(string title, string author, string isbn, string PublicationYear, string expectedMessage)
         {
             // Arrange
-            var book = new Book { Title = title, Author = author, ISBN = isbn, PublisherYear = publisherYear };
+            var book = new Book { Title = title, Author = author, ISBN = isbn, PublicationYear = PublicationYear };
             _bookNumberValidatorMock.Setup(v => v.IsValid(It.IsAny<string>())).Returns(isbn == "1234567890");
 
             // Act & Assert
@@ -45,7 +45,7 @@ namespace LibraryManagementSystem.Tests
         public void ValidateBook_ShouldNotThrowException_WhenBookIsValid()
         {
             // Arrange
-            var book = new Book { Title = "Valid Title", Author = "Valid Author", ISBN = "1234567890", PublisherYear = "2023" };
+            var book = new Book { Title = "Valid Title", Author = "Valid Author", ISBN = "1234567890", PublicationYear = "2023" };
             _bookNumberValidatorMock.Setup(v => v.IsValid(It.IsAny<string>())).Returns(true);
 
             // Act & Assert

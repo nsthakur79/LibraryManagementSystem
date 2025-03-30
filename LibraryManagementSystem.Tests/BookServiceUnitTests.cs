@@ -22,7 +22,7 @@ namespace LibraryManagementSystem.Tests
         public void AddBook_ShouldCallRepositoryAddBook()
         {
             // Arrange
-            var book = new Book { Id = 1, Title = "Test Book", Author = "Test Author", ISBN = "1234567890", PublisherYear = "2023" };
+            var book = new Book { Id = 1, Title = "Test Book", Author = "Test Author", ISBN = "1234567890", PublicationYear = "2023" };
 
             // Act
             _bookService.AddBook(book);
@@ -37,8 +37,8 @@ namespace LibraryManagementSystem.Tests
             // Arrange
             var books = new List<Book>
             {
-                new() { Id = 1, Title = "Test Book 1", Author = "Test Author 1", ISBN = "1234567890", PublisherYear = "2023" },
-                new() { Id = 2, Title = "Test Book 2", Author = "Test Author 2", ISBN = "0987654321", PublisherYear = "2022" }
+                new() { Id = 1, Title = "Test Book 1", Author = "Test Author 1", ISBN = "1234567890", PublicationYear = "2023" },
+                new() { Id = 2, Title = "Test Book 2", Author = "Test Author 2", ISBN = "0987654321", PublicationYear = "2022" }
             };
             _bookRepositoryMock.Setup(repo => repo.GetAll()).Returns(books);
 
@@ -53,7 +53,7 @@ namespace LibraryManagementSystem.Tests
         public void GetBookById_ShouldReturnBook_WhenBookExists()
         {
             // Arrange
-            var book = new Book { Id = 1, Title = "Test Book", Author = "Test Author", ISBN = "1234567890", PublisherYear = "2023" };
+            var book = new Book { Id = 1, Title = "Test Book", Author = "Test Author", ISBN = "1234567890", PublicationYear = "2023" };
             _bookRepositoryMock.Setup(repo => repo.Exists(book.Id)).Returns(true);
             _bookRepositoryMock.Setup(repo => repo.GetById(1)).Returns(book);
 
@@ -82,7 +82,7 @@ namespace LibraryManagementSystem.Tests
         public void UpdateBook_ShouldCallRepositoryUpdateBook()
         {
             // Arrange
-            var book = new Book { Id = 1, Title = "Updated Book", Author = "Updated Author", ISBN = "1234567890", PublisherYear = "2023" };
+            var book = new Book { Id = 1, Title = "Updated Book", Author = "Updated Author", ISBN = "1234567890", PublicationYear = "2023" };
             _bookRepositoryMock.Setup(repo => repo.Exists(book.Id)).Returns(true);
 
             // Act

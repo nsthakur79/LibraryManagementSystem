@@ -16,9 +16,9 @@ namespace LibraryManagementSystem.Validators
                 b => (!string.IsNullOrWhiteSpace(b.Title), "Title is required"),
                 b => (!string.IsNullOrWhiteSpace(b.Author), "Author is required"),
                 b => (!string.IsNullOrWhiteSpace(b.ISBN), "ISBN is required"),
-                b => (!string.IsNullOrWhiteSpace(b.PublisherYear), "Publisher year is required"),
+                b => (!string.IsNullOrWhiteSpace(b.PublicationYear), "Publisher year is required"),
                 b => (_bookNumberValidator.IsValid(b.ISBN), "Invalid ISBN"),
-                b => (b.PublisherYear.All(char.IsDigit), "Publisher year must be a number")
+                b => (b.PublicationYear.All(char.IsDigit), "Publisher year must be a number")
             };
 
             validationRules.ForEach(rule =>

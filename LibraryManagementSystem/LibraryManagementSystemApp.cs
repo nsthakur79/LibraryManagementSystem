@@ -71,27 +71,27 @@ namespace LibraryManagementSystem
                 Title = "Clean Code",
                 Author = "Robert C. Martin",
                 ISBN = "978-0132350884",
-                PublisherYear = "2008"
+                PublicationYear = "2008"
             },
             new() {
                 Title = "Building Microservices",
                 Author = "Sam Newman",
                 ISBN = "978-1491950357",
-                PublisherYear = "2015"
+                PublicationYear = "2015"
             },
             new()
             {
                 Title = "The Pragmatic Programmer",
                 Author = "Andrew Hunt",
                 ISBN = "978-0201616224",
-                PublisherYear = "1999"
+                PublicationYear = "1999"
             },
             new()
             {
                 Title = "Software Engineering",
                 Author = "Sommerville, Ian",
                 ISBN = "0133943038",
-                PublisherYear = "2015"
+                PublicationYear = "2015"
             },
         };
 
@@ -119,7 +119,7 @@ namespace LibraryManagementSystem
                     Title = Utility.ReadAndAddProperty($"{nameof(book.Title)}"),
                     Author = Utility.ReadAndAddProperty($"{nameof(book.Author)}"),
                     ISBN = Utility.ReadAndAddProperty($"{nameof(book.ISBN)}"),
-                    PublisherYear = Utility.ReadAndAddProperty($"{nameof(book.PublisherYear)}")
+                    PublicationYear = Utility.ReadAndAddProperty($"{nameof(book.PublicationYear)}")
                 };
 
                 _bookService?.AddBook(book);
@@ -162,7 +162,7 @@ namespace LibraryManagementSystem
                     Title = Utility.ReadAndUpdateProperty($"{nameof(bookToUpdate.Title)}", bookToUpdate.Title),
                     Author = Utility.ReadAndUpdateProperty($"{nameof(bookToUpdate.Author)}", bookToUpdate.Author),
                     ISBN = Utility.ReadAndUpdateProperty($"{nameof(bookToUpdate.ISBN)}", bookToUpdate.ISBN),
-                    PublisherYear = Utility.ReadAndUpdateProperty($"{nameof(bookToUpdate.PublisherYear)}", bookToUpdate.PublisherYear)
+                    PublicationYear = Utility.ReadAndUpdateProperty($"{nameof(bookToUpdate.PublicationYear)}", bookToUpdate.PublicationYear)
                 };
 
                 if (bookToUpdate.Equals(updatedBook))

@@ -11,7 +11,7 @@ namespace LibraryManagementSystem.Tests
         public InMemoryRepositoryUnitTests()
         {
             _bookRepository = new();
-            _sampleBook = new() { Id = 1, Title = "Book 1", Author = "Author 1", ISBN = "123", PublisherYear = "2020" };
+            _sampleBook = new() { Id = 1, Title = "Book 1", Author = "Author 1", ISBN = "123", PublicationYear = "2020" };
             ClearRepository();
         }
 
@@ -57,7 +57,7 @@ namespace LibraryManagementSystem.Tests
                 Title = "Second Book",
                 Author = "Another Author",
                 ISBN = "978-0451524935",
-                PublisherYear = "2022"
+                PublicationYear = "2022"
             };
 
             // Act
@@ -109,7 +109,7 @@ namespace LibraryManagementSystem.Tests
                 Title = "UpdateBookd Title",
                 Author = "UpdateBookd Author",
                 ISBN = "978-0743273565",
-                PublisherYear = "2024"
+                PublicationYear = "2024"
             };
 
             // Act
@@ -121,7 +121,7 @@ namespace LibraryManagementSystem.Tests
             Assert.Equal(UpdateBook.Title, result.Title);
             Assert.Equal(UpdateBook.Author, result.Author);
             Assert.Equal(UpdateBook.ISBN, result.ISBN);
-            Assert.Equal(UpdateBook.PublisherYear, result.PublisherYear);
+            Assert.Equal(UpdateBook.PublicationYear, result.PublicationYear);
         }
 
         [Fact]
@@ -134,7 +134,7 @@ namespace LibraryManagementSystem.Tests
                 Author = "",
                 ISBN = "",
                 Title = "",
-                PublisherYear = ""
+                PublicationYear = ""
             };
 
             // Act & Assert (should not throw)
@@ -192,9 +192,9 @@ namespace LibraryManagementSystem.Tests
         public void GetAllBooks_ShouldReturnAllBooks_InOrderOfAddition()
         {
             // Arrange
-            var book1 = new Book { Title = "First Book", Author = "Author 1", ISBN = "1111111111", PublisherYear = "2020" };
-            var book2 = new Book { Title = "Second Book", Author = "Author 2", ISBN = "2222222222", PublisherYear = "2021" };
-            var book3 = new Book { Title = "Third Book", Author = "Author 3", ISBN = "3333333333", PublisherYear = "2022" };
+            var book1 = new Book { Title = "First Book", Author = "Author 1", ISBN = "1111111111", PublicationYear = "2020" };
+            var book2 = new Book { Title = "Second Book", Author = "Author 2", ISBN = "2222222222", PublicationYear = "2021" };
+            var book3 = new Book { Title = "Third Book", Author = "Author 3", ISBN = "3333333333", PublicationYear = "2022" };
 
             // Act
             _bookRepository.Add(book1);
@@ -213,7 +213,7 @@ namespace LibraryManagementSystem.Tests
         public void Add_ShouldNotAffectOtherBooks_WhenAddingNewBook()
         {
             // Arrange
-            var initialBook = new Book { Title = "Initial Book", Author = "Initial Author", ISBN = "4444444444", PublisherYear = "2019" };
+            var initialBook = new Book { Title = "Initial Book", Author = "Initial Author", ISBN = "4444444444", PublicationYear = "2019" };
             _bookRepository.Add(initialBook);
             var initialCount = _bookRepository.GetAll().Count();
 
