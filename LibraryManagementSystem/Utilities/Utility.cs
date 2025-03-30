@@ -43,5 +43,17 @@
             Console.WriteLine(message);
             Console.ResetColor();
         }
+
+        public static string ReadAndUpdateProperty(string propertyName, string currentValue)
+        {
+            Console.WriteLine($"Enter the book {propertyName}:");
+            var newValue = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(newValue))
+            {
+                Console.WriteLine($"Keeping existing {propertyName}: {currentValue}\n");
+                return currentValue;
+            }
+            return newValue;
+        }
     }
 }
