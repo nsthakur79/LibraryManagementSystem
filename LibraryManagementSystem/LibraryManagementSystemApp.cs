@@ -153,7 +153,8 @@ namespace LibraryManagementSystem
 
                 if (bookToUpdate == null) return;
 
-                Console.WriteLine("\nEnter the book details to update or leave empty to keep existing value:");
+                Utility.ConsoleWriteCyanLine("\nEnter the book details to update or leave empty to keep existing value:");
+
                 Console.WriteLine("\nEnter the book title:");
                 var title = Console.ReadLine();
                 bookToUpdate.Title = !string.IsNullOrWhiteSpace(title) ? title : bookToUpdate.Title;

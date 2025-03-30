@@ -57,6 +57,12 @@ To run the unit tests:
 - - **Unit Testing**: The project includes unit tests to ensure the reliability of the code and to catch any regressions.
 
 
+## Future Improvements
+- **Logging**: Implement attribute based (Aspect Injection) logging to log errors, warnings, and information messages.
+- **Persistence**: Implement a database to store the book data.
+- **Search Functionality**: Implement a search functionality to search for books by title, author, or ISBN.
+
+
 ## License
 This project is licensed under the MIT License. See the `LICENSE` file for details.
 
