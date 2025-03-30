@@ -31,7 +31,7 @@ namespace LibraryManagementSystem
                 Console.WriteLine("Choose an option number and press enter:");
                 Console.WriteLine(menuOptions);
 
-                
+
                 var option = Console.ReadLine();
                 switch (option)
                 {
@@ -155,24 +155,23 @@ namespace LibraryManagementSystem
 
                 Utility.ConsoleWriteCyanLine("\nEnter the book details to update or leave empty to keep existing value:");
 
-                Console.WriteLine("\nEnter the book title:");
-                var title = Console.ReadLine();
-                bookToUpdate.Title = !string.IsNullOrWhiteSpace(title) ? title : bookToUpdate.Title;
+                var updatedBook = new Book
+                {
+                    Id = bookToUpdate.Id,
+                    Title = Utility.ReadAndUpdateProperty($"{nameof(bookToUpdate.Title)}", bookToUpdate.Title),
+                    Author = Utility.ReadAndUpdateProperty($"{nameof(bookToUpdate.Author)}", bookToUpdate.Author),
+                    ISBN = Utility.ReadAndUpdateProperty($"{nameof(bookToUpdate.ISBN)}", bookToUpdate.ISBN),
+                    PublisherYear = Utility.ReadAndUpdateProperty($"{nameof(bookToUpdate.PublisherYear)}", bookToUpdate.PublisherYear)
+                };
 
-                Console.WriteLine("Enter the book author:");
-                var author = Console.ReadLine();
-                bookToUpdate.Author = !string.IsNullOrEmpty(author) ? author : bookToUpdate.Author;
+                if (bookToUpdate.Equals(updatedBook))
+                {
+                    Utility.ConsoleWriteYellowLine("\nNo changes detected. Book not updated.");
+                    return;
+                }
 
-                Console.WriteLine("Enter the book ISBN:");
-                var isbn = Console.ReadLine();
-                bookToUpdate.ISBN = !string.IsNullOrEmpty(isbn) ? isbn : bookToUpdate.ISBN;
-
-                Console.WriteLine("Enter the book publisher year:");
-                var publisherYear = Console.ReadLine();
-                bookToUpdate.PublisherYear = !string.IsNullOrEmpty(publisherYear) ? publisherYear : bookToUpdate.PublisherYear;
-
+                _bookService?.UpdateBook(updatedBook);
                 Utility.ConsoleWriteGreenLine("\nBook updated successfully.");
-
             }
             catch (Exception exception)
             {
