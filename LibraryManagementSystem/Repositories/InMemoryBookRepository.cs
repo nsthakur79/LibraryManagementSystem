@@ -16,14 +16,11 @@ namespace LibraryManagementSystem.Repositories
         }
         public void Update(Book entity)
         {
-            if (_entities.ContainsKey(entity.Id))
-            {
-                _entities[entity.Id] = entity;
-            }
+            _entities[entity.Id] = entity;
         }
         public void Delete(int id)
         {
-            _ = Exists(id) && _entities.Remove(id);
+            _entities.Remove(id);
         }
         public bool Exists(int id)
         {
@@ -35,7 +32,7 @@ namespace LibraryManagementSystem.Repositories
         }
         public Book? GetById(int id)
         {
-            return Exists(id) ? _entities[id] : default(Book);
+            return Exists(id) ? _entities[id] : null;
         }
     }
 }

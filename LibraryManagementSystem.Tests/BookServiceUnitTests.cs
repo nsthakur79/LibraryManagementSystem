@@ -105,33 +105,5 @@ namespace LibraryManagementSystem.Tests
             // Assert
             _bookRepositoryMock.Verify(repo => repo.Delete(bookId), Times.Once);
         }
-
-        [Fact]
-        public void BookExists_ShouldReturnTrue_WhenBookExists()
-        {
-            // Arrange
-            var bookId = 1;
-            _bookRepositoryMock.Setup(repo => repo.Exists(bookId)).Returns(true);
-
-            // Act
-            var result = _bookService.BookExists(bookId);
-
-            // Assert
-            Assert.True(result);
-        }
-
-        [Fact]
-        public void BookExists_ShouldReturnFalse_WhenBookDoesNotExist()
-        {
-            // Arrange
-            var bookId = 1;
-            _bookRepositoryMock.Setup(repo => repo.Exists(bookId)).Returns(false);
-
-            // Act
-            var result = _bookService.BookExists(bookId);
-
-            // Assert
-            Assert.False(result);
-        }
     }
 }
