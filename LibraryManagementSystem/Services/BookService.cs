@@ -10,14 +10,7 @@ namespace LibraryManagementSystem.Services
 
         public IEnumerable<Book> GetAllBooks()
         {
-            var books = _bookRepository.GetAll();
-
-            if (books == null || !books.Any())
-            {
-                throw new ArgumentException("No book found.");
-            }
-
-            return books;
+            return _bookRepository.GetAll();
         }
 
         public Book? GetBookById(int id)
@@ -42,15 +35,14 @@ namespace LibraryManagementSystem.Services
             EnsureBookIdExists(id);
             _bookRepository.Delete(id);
         }
-        public void EnsureBookIdExists(int id)
+        private void EnsureBookIdExists(int id)
         {
             if (!BookExists(id))
             {
                 throw new ArgumentException($"The specified Book ID not found.");
             }
         }
-
-        public bool BookExists(int id)
+        private bool BookExists(int id)
         {
             return _bookRepository.Exists(id);
         }

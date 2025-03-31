@@ -46,7 +46,11 @@
 
         public static string ReadAndAddProperty(string propertyName)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("*");
+            Console.ResetColor();
             Console.WriteLine($"Enter the book {propertyName}:");
+            
             var value = Console.ReadLine();
             return string.IsNullOrWhiteSpace(value) ? string.Empty : value;
         }
